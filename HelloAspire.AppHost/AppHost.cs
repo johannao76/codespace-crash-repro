@@ -9,4 +9,12 @@ builder.AddProject<Projects.HelloAspire_Web>("webfrontend")
     .WithReference(apiService)
     .WaitFor(apiService);
 
+builder.AddPnpmApp("reactapp", "../ReactRouterApp", scriptName: "dev")
+    .WithPnpmPackageInstallation()
+    .WithHttpEndpoint(name: "http", port: 5173, env: "VITE_PORT", isProxied: false)
+    .WithExternalHttpEndpoints()
+    .PublishAsDockerFile();
+// .WithHttpCommand("dev")
+// .WithEnvironment("NODE_ENV", "development");
+
 builder.Build().Run();
